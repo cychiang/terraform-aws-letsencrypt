@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "ecs_execution" {
 resource "aws_iam_role" "ecs_execution" {
   name               = "fargate-${var.service_name}-task-execution"
   assume_role_policy = data.aws_iam_policy_document.ecs_execution_principal.json
+  tags               = var.tags
 }
 resource "aws_iam_role_policy" "ecs_execution" {
   name   = "fargate-${var.service_name}-task-execution"

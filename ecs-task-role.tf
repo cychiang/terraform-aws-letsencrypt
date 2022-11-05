@@ -48,9 +48,11 @@ data "aws_iam_policy_document" "ecs_task" {
 resource "aws_iam_role" "ecs_task" {
   name               = "fargate-${var.service_name}-task"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_principal.json
+  tags               = var.tags
 }
 resource "aws_iam_role_policy" "ecs_task" {
   name   = "fargate-${var.service_name}-task"
   role   = aws_iam_role.ecs_task.id
   policy = data.aws_iam_policy_document.ecs_task.json
+  tags   = var.tags
 }

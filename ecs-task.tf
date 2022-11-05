@@ -58,4 +58,5 @@ resource "aws_ecs_task_definition" "letsencrypt" {
   cpu                      = var.container_cpu
   memory                   = var.container_memory
   requires_compatibilities = ["FARGATE"]
+  tags                     = var.tags
 }

@@ -86,3 +86,9 @@ variable "schedule_expression" {
   description = "How often Cloudwatch Events should kick off the renewal task. Recommended to run at least every 30 days."
   default     = "rate(7 days)"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to add to AWS resources"
+  default     = {}
+}

@@ -14,12 +14,14 @@ resource "aws_security_group" "allow_outbound_traffic" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = var.tags
 }
 
 resource "aws_cloudwatch_event_rule" "schedule_rule" {
   name                = "${var.service_name}-${var.environment_name}"
   schedule_expression = var.schedule_expression
   is_enabled          = true
+  tags                = var.tags
 }
 
 resource "aws_cloudwatch_event_target" "fargate_scheduled_task" {
@@ -36,6 +38,7 @@ resource "aws_cloudwatch_event_target" "fargate_scheduled_task" {
       subnets         = var.subnet_ids
       security_groups = [aws_security_group.allow_outbound_traffic.id]
     }
+    tags = var.tags
   }
 }
 
@@ -71,8 +74,8 @@ EOF
 }
 
 resource "aws_iam_role" "schedule_role" {
-  name = "${var.service_name}-${var.environment_name}_schedule_role"
-
+  name               = "${var.service_name}-${var.environment_name}_schedule_role"
+  tags               = var.tags
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
